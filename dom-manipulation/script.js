@@ -81,7 +81,7 @@ function createAddQuoteForm() {
 }
 
 // Initialize categories
-function initCategories() {
+function showRandomQuote() {
   const categories = [...new Set(quotes.map(q => q.category))];
   categories.forEach(category => {
     const option = document.createElement("option");
