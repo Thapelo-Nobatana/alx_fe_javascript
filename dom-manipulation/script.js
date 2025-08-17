@@ -21,13 +21,13 @@ function showRandomQuote() {
   }
 
   if (filteredQuotes.length === 0) {
-    quoteDisplay.textContent = "No quotes available for this category.";
+    quoteDisplay.innerHTML = "No quotes available for this category.";
     return;
   }
 
   const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
   const quote = filteredQuotes[randomIndex];
-  quoteDisplay.textContent = `"${quote.text}" — (${quote.category})`;
+  quoteDisplay.innerHTML = `"${quote.text}" — (${quote.category})`;
 }
 
 // Function to add a new quote
@@ -47,7 +47,7 @@ function addQuote() {
   if (![...categoryFilter.options].some(opt => opt.value.toLowerCase() === newQuoteCategory.toLowerCase())) {
     const option = document.createElement("option");
     option.value = newQuoteCategory;
-    option.textContent = newQuoteCategory;
+    option.innerHTML = newQuoteCategory;
     categoryFilter.appendChild(option);
   }
 
@@ -62,7 +62,7 @@ function initCategories() {
   categories.forEach(category => {
     const option = document.createElement("option");
     option.value = category;
-    option.textContent = category;
+    option.innerHTML = category;
     categoryFilter.appendChild(option);
   });
 }
