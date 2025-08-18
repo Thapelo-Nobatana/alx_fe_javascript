@@ -153,3 +153,22 @@ window.onload = function() {
   // Periodic sync
   setInterval(fetchQuotesFromServer, 30000);
 };
+
+// ===== Sync Quotes Function =====
+async function syncQuotes() {
+  // First, fetch quotes from the server
+  await fetchQuotesFromServer();
+
+  // Then, post any new local quotes to the server
+  for (const quote of quotes) {
+    await postQuoteToServer(quote);
+  }
+
+  console.log("Quotes synced with server");
+}
+
+// Call syncQuotes periodically
+setInterval(syncQuotes, 30000);
+
+// Initial sync on page load
+syncQuotes();
