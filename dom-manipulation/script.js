@@ -87,11 +87,11 @@ function showRandomQuote() {
 // Filter Quotes
 // ---------------------------
 function filterQuotes() {
-  const selected = categoryFilter.value;
-  localStorage.setItem(LS_LAST_FILTER_KEY, selected); // save last filter
+  const selectedCategory = categoryFilter.value;
+  localStorage.setItem(LS_LAST_FILTER_KEY, selectedCategory); // save last filter
 
   // Show the first quote from the filtered list
-  const filtered = selected === "all" ? quotes : quotes.filter(q => q.category === selected);
+  const filtered = selectedCategory === "all" ? quotes : quotes.filter(q => q.category === selectedCategory);
 
   if (filtered.length === 0) {
     quoteDisplay.innerHTML = "<em>No quotes available in this category.</em>";
