@@ -167,6 +167,22 @@ async function syncQuotes() {
   console.log("Quotes synced with server");
 }
 
+async function syncQuotes() {
+  try {
+    await fetchQuotesFromServer();
+
+    for (const quote of quotes) {
+      await postQuoteToServer(quote);
+    }
+
+    // UI notification for successful sync
+    alert("Quotes synced with server!");
+    console.log("Quotes synced with server!");
+  } catch (err) {
+    console.error("Error syncing quotes:", err);
+  }
+}
+
 // Call syncQuotes periodically
 setInterval(syncQuotes, 30000);
 
