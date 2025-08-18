@@ -370,4 +370,27 @@ function init() {
   syncOnce();
 }
 
+// Function to fetch quotes from the server (simulation)
+function fetchQuotesFromServer() {
+  return fetch("https://jsonplaceholder.typicode.com/posts") // mock API
+    .then(response => response.json())
+    .then(data => {
+      // Simulate mapping server data to quote objects
+      const serverQuotes = data.slice(0, 5).map(item => ({
+        text: item.title,
+        category: "Server"
+      }));
+
+      // Conflict resolution: server wins
+      quotes = serverQuotes;
+      saveQuotes();
+
+      // Update UI
+      populateCategories();
+      displayRandomQuote();
+
+      console.log("Quotes synced from server:", serverQuotes);
+    })
+    .catch(error => console.error("Error fetching quotes:", error));
+}
 init();
