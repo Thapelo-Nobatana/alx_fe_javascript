@@ -103,36 +103,39 @@ function importFromJsonFile(event) {
 }
 
 // ===== Server Sync =====
-function fetchQuotesFromServer() {
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then(res => res.json())
-    .then(serverQuotes => {
-      // Conflict resolution: server wins
-      quotes = serverQuotes.map(item => ({
-        text: item.title || `Quote ${item.id}`,
-        category: "Server"
-      }));
-      saveQuotes();
-      populateCategories();
-      filterQuotes();
-      console.log("Quotes synced from server");
-    })
-    .catch(err => console.error("Error fetching server quotes:", err));
+async function fetchQuotesFromServer()  {
+     try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const serverQuotes = await response.json();
+
+    // Conflict resolution: server data takes precedence
+    quotes = serverQuotes.map(item => ({
+      text: item.title || `Quote ${item.id}`,
+      category: "Server"
+    }));
+
+    saveQuotes();
+    populateCategories();
+    filterQuotes();
+    console.log("Quotes synced from server");
+  } catch (err) {
+    console.error("Error fetching server quotes:", err);
+  }
+    
 }
 
-function postQuoteToServer(quote) {
-  fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(quote)
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Quote posted to server:", data);
-    })
-    .catch(err => console.error("Error posting quote:", err));
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(quote)
+    });
+    const data = await response.json();
+    console.log("Quote posted to server:", data);
+  } catch (err) {
+    console.error("Error posting quote:", err);
+  }
 }
 
 // ===== Init =====
